@@ -28,6 +28,7 @@ public class LoginUser extends AppCompatActivity {
     TextView reg;
     Button login;
     private FirebaseAuth authUser;
+    //login
 
 
     @Override
