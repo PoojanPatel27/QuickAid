@@ -94,9 +94,12 @@ public class RegisterUser extends AppCompatActivity {
                 if (task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
 
+                    String uid = auth.getUid();
+
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
-                    userDetailsUpload userDetails = new userDetailsUpload(textfullName, textNumber, textEmail);
+
+                    userDetailsUpload userDetails = new userDetailsUpload(textfullName, textNumber, textEmail, uid);
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 

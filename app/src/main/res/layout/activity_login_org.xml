@@ -42,6 +42,7 @@
                     android:id="@+id/progBarLogin"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"/>
 
@@ -103,10 +104,10 @@
                     android:background="@drawable/custom_edittext"/>
 
                 <EditText
-                    android:id="@+id/passwordLogin"
+                    android:id="@+id/passwordLoginorg"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_below="@id/emailEtlogin"
+                    android:layout_below="@id/emailEtloginorg"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
@@ -117,7 +118,7 @@
                     android:background="@drawable/custom_edittext"/>
 
                 <EditText
-                    android:id="@+id/emailEtlogin"
+                    android:id="@+id/emailEtloginorg"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@id/categoryEtLogin"
@@ -134,7 +135,7 @@
                     android:id="@+id/addressEt"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_below="@id/passwordLogin"
+                    android:layout_below="@id/passwordLoginorg"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
@@ -147,7 +148,7 @@
                     android:id="@+id/loginBtn"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/passwordLogin"
+                    android:layout_below="@id/passwordLoginorg"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="30dp"

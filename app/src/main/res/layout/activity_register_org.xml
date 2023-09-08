@@ -32,6 +32,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ProgressBar
+                android:id="@+id/orgProgbarReg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/RegisterTv"
                 android:layout_width="wrap_content"
@@ -55,7 +63,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:hint="NGO Name"
+                android:hint="Agencies name"
                 android:paddingLeft="20dp"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/ic_person"
@@ -69,7 +77,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:hint="NGO Category"
+                android:hint="Experties"
                 android:paddingLeft="20dp"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/ic_category"
@@ -93,7 +101,7 @@
                 android:id="@+id/ngopasswordEtReg"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/emailEtReg"
+                android:layout_below="@id/ngoemailEtReg"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -104,7 +112,7 @@
                 android:background="@drawable/custom_edittext"/>
 
             <EditText
-                android:id="@+id/emailEtReg"
+                android:id="@+id/ngoemailEtReg"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/ngocategoryEtReg"
@@ -118,7 +126,7 @@
                 android:background="@drawable/custom_edittext"/>
 
             <EditText
-                android:id="@+id/addressEt"
+                android:id="@+id/ngoaddressEtReg"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/ngopasswordEtReg"
@@ -131,11 +139,23 @@
                 android:drawableLeft="@drawable/ic_add_location"
                 android:background="@drawable/custom_edittext"/>
 
+            <EditText
+                android:id="@+id/orgAreaPinReg"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/ngoaddressEtReg"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Area pincode"
+                android:paddingLeft="20dp"/>
+
             <Button
-                android:id="@+id/loginBtn"
+                android:id="@+id/orgRegBtn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/addressEt"
+                android:layout_below="@id/orgAreaPinReg"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="30dp"

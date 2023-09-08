@@ -2,16 +2,17 @@ package com.example.myapplication.quickaid;
 
 public class userDetailsUpload {
 
-    String name,number,email;
+    String name,number,email,uid;
 
 
     public userDetailsUpload() {
     }
 
-    public userDetailsUpload(String name, String number, String email) {
+    public userDetailsUpload(String name, String number, String email, String uid) {
         this.name = name;
         this.number = number;
         this.email = email;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -36,5 +37,13 @@ public class userDetailsUpload {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
