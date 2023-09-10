@@ -99,7 +99,7 @@ public class RegisterUser extends AppCompatActivity {
                     FirebaseUser firebaseUser = auth.getCurrentUser();
 
 
-                    userDetailsUpload userDetails = new userDetailsUpload(textfullName, textNumber, textEmail, uid);
+                    UserDetailsModel userDetails = new UserDetailsModel(textfullName, textNumber, textEmail, uid);
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +14,9 @@ import java.util.ArrayList;
 public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<OrgDetailsUploadModel> List;
+    ArrayList<OrgDetailsModel> List;
 
-    public NgoListAdapter(Context context, ArrayList<OrgDetailsUploadModel> List) {
+    public NgoListAdapter(Context context, ArrayList<OrgDetailsModel> List) {
         this.context = context;
         this.List = List;
     }
@@ -34,7 +33,7 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        OrgDetailsUploadModel orgDetails = List.get(position);
+        OrgDetailsModel orgDetails = List.get(position);
         holder.ngoName.setText(orgDetails.getName());
         holder.ngoCategory.setText(orgDetails.getCategory());
 

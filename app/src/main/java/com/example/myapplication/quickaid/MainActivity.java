@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     Button org,user;
+    CardView carduser,organization;
     FirebaseAuth authUser;
 
     @SuppressLint("MissingInflatedId")
@@ -24,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
         org = findViewById(R.id.orgBtn);
         user = findViewById(R.id.userBtn);
+        carduser = findViewById(R.id.cardUser);
+        organization = findViewById(R.id.cradOrganization);
 
-        org.setOnClickListener(new View.OnClickListener() {
+
+        organization.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),LoginOrg.class);
@@ -33,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        user.setOnClickListener(new View.OnClickListener() {
+        carduser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),LoginUser.class);

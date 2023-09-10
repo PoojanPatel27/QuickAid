@@ -1,14 +1,14 @@
 package com.example.myapplication.quickaid;
 
-public class userDetailsUpload {
+public class UserDetailsModel {
 
     String name,number,email,uid;
 
 
-    public userDetailsUpload() {
+    public UserDetailsModel() {
     }
 
-    public userDetailsUpload(String name, String number, String email, String uid) {
+    public UserDetailsModel(String name, String number, String email, String uid) {
         this.name = name;
         this.number = number;
         this.email = email;

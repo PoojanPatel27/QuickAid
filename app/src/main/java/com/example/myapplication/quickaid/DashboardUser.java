@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class DashboardUser extends AppCompatActivity {
     
     CardView card1,card5,card4;
+    ImageButton logout;
     TextView nametv;
     FirebaseAuth userAuth;
 
@@ -36,13 +36,14 @@ public class DashboardUser extends AppCompatActivity {
         card5 = findViewById(R.id.card5);
         card4 = findViewById(R.id.card4);
         nametv = findViewById(R.id.userNameTv);
+        logout = findViewById(R.id.imageButtonLogout);
         reference = FirebaseDatabase.getInstance().getReference("User");
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    OrgDetailsUploadModel model = snapshot.getValue(OrgDetailsUploadModel.class);
+                    OrgDetailsModel model = snapshot.getValue(OrgDetailsModel.class);
 
                     if (model != null){
                         String name = model.getName();
@@ -71,10 +72,20 @@ public class DashboardUser extends AppCompatActivity {
             }
         });
 
-        card5.setOnClickListener(new View.OnClickListener() {
+//        card5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                userAuth.signOut();
+//                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 userAuth.signOut();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);

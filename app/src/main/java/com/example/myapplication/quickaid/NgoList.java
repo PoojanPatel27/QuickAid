@@ -20,7 +20,7 @@ public class NgoList extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference database;
     NgoListAdapter adapter;
-    ArrayList<OrgDetailsUploadModel> List;
+    ArrayList<OrgDetailsModel> List;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class NgoList extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    OrgDetailsUploadModel orgDetails = dataSnapshot.getValue(OrgDetailsUploadModel.class);
+                    OrgDetailsModel orgDetails = dataSnapshot.getValue(OrgDetailsModel.class);
                     List.add(orgDetails);
                 }
                 adapter.notifyDataSetChanged();

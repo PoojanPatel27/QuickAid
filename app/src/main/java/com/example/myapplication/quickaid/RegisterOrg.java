@@ -129,7 +129,8 @@ public class RegisterOrg extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     FirebaseUser user = auth.getCurrentUser();
 
-                OrgDetailsUploadModel orgdetails = new OrgDetailsUploadModel(textName,textnumber,textcategory,textemail,textAddress,textPincode,orgUid);
+
+                OrgDetailsModel orgdetails = new OrgDetailsModel(textName,textnumber,textcategory,textemail,textAddress,textPincode,orgUid);
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Organization");
 

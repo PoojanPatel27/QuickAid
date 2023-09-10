@@ -149,6 +149,8 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
                 android:hint="Area pincode"
+                android:drawableLeft="@drawable/ic_location_pincode"
+                android:drawablePadding="10dp"
                 android:paddingLeft="20dp"/>
 
             <Button

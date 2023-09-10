@@ -82,6 +82,8 @@ public class LoginOrg extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(LoginOrg.this, "Logged in succefully!!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),DashboardOrg.class));
+                    finish();
                 } else {
                     Toast.makeText(LoginOrg.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
                 }

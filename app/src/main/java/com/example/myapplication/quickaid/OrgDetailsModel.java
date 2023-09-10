@@ -1,13 +1,13 @@
 package com.example.myapplication.quickaid;
 
-public class OrgDetailsUploadModel {
+public class OrgDetailsModel {
     String name,number,category,email,address,pincode,orgUid;
 
-    public OrgDetailsUploadModel() {
+    public OrgDetailsModel() {
     }
 
 
-    public OrgDetailsUploadModel(String name, String number, String category, String email, String address, String pincode, String orgUid) {
+    public OrgDetailsModel(String name, String number, String category, String email, String address, String pincode, String orgUid) {
         this.name = name;
         this.number = number;
         this.category = category;
