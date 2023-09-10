@@ -2,6 +2,7 @@ package com.example.myapplication.quickaid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,13 +15,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NgoList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference database;
     NgoListAdapter adapter;
-    ArrayList<OrgDetailsModel> List;
+    ArrayList<OrgDetailsModel> listOrg;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +31,14 @@ public class NgoList extends AppCompatActivity {
         setContentView(R.layout.activity_ngo_list);
 
         recyclerView = findViewById(R.id.ngoRecView);
+        searchView = findViewById(R.id.SearchViewNgoList);
 
         database = FirebaseDatabase.getInstance().getReference("Organization");
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        List = new ArrayList<>();
-        adapter = new NgoListAdapter(this, List);
+        listOrg = new ArrayList<>();
+        adapter = new NgoListAdapter(this, listOrg);
         recyclerView.setAdapter(adapter);
 
         database.addValueEventListener(new ValueEventListener() {
@@ -42,7 +46,7 @@ public class NgoList extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     OrgDetailsModel orgDetails = dataSnapshot.getValue(OrgDetailsModel.class);
-                    List.add(orgDetails);
+                    listOrg.add(orgDetails);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -52,5 +56,28 @@ public class NgoList extends AppCompatActivity {
 
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filter(String newText) {
+        ArrayList<OrgDetailsModel> filteredlist = new ArrayList<>();
+        for (OrgDetailsModel item : listOrg){
+            if (item.getName().toLowerCase().contains(newText.toLowerCase())){
+                filteredlist.add(item);
+            }
+        }
+        adapter.filterList(filteredlist);
     }
 }

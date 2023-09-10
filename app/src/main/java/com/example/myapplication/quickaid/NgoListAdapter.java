@@ -10,15 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<OrgDetailsModel> List;
+    ArrayList<OrgDetailsModel> listOrg;
 
     public NgoListAdapter(Context context, ArrayList<OrgDetailsModel> List) {
         this.context = context;
-        this.List = List;
+        this.listOrg = List;
     }
 
     @NonNull
@@ -33,7 +34,7 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        OrgDetailsModel orgDetails = List.get(position);
+        OrgDetailsModel orgDetails = listOrg.get(position);
         holder.ngoName.setText(orgDetails.getName());
         holder.ngoCategory.setText(orgDetails.getCategory());
 
@@ -48,8 +49,10 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return List.size();
+        return listOrg.size();
     }
+
+
 
     public static class MyViewHolder extends  RecyclerView.ViewHolder{
 
@@ -61,5 +64,10 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHo
             ngoName = itemView.findViewById(R.id.ngoNameTv);
             ngoCategory = itemView.findViewById(R.id.ngoCategoryTv);
         }
+    }
+
+    public void filterList(ArrayList<OrgDetailsModel> filteredList){
+        listOrg = filteredList;
+        notifyDataSetChanged();
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,50 +20,50 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DashboardUser extends AppCompatActivity {
-    
+
     CardView card1,card5,card4;
     ImageButton logout;
     TextView nametv;
     FirebaseAuth userAuth;
-
+    FirebaseUser fuser;
     DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_user);
-        
+
         card1 = findViewById(R.id.card1);
         card5 = findViewById(R.id.card5);
         card4 = findViewById(R.id.card4);
         nametv = findViewById(R.id.userNameTv);
         logout = findViewById(R.id.imageButtonLogout);
-        reference = FirebaseDatabase.getInstance().getReference("User");
+        userAuth = FirebaseAuth.getInstance();
+        fuser = userAuth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
 
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    OrgDetailsModel model = snapshot.getValue(OrgDetailsModel.class);
 
-                    if (model != null){
-                        String name = model.getName();
-                        nametv.setText(name);
+        if (fuser != null){
+            String uid = fuser.getUid();
+
+            reference.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        UserDetailsModel user = snapshot.getValue(UserDetailsModel.class);
+                        if (user!=null){
+                            String username = user.getName();
+                            nametv.setText(username);
+                        }
                     }
-                } else {
-
                 }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        userAuth = FirebaseAuth.getInstance();
+                }
+            });
+        }
 
         card4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,17 +72,6 @@ public class DashboardUser extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        card5.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                userAuth.signOut();
-//                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +83,7 @@ public class DashboardUser extends AppCompatActivity {
             }
         });
 
+
         nametv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,4 +92,5 @@ public class DashboardUser extends AppCompatActivity {
             }
         });
     }
+
 }
