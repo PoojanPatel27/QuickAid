@@ -91,6 +91,13 @@ public class DashboardUser extends AppCompatActivity {
                 Toast.makeText(DashboardUser.this, uid, Toast.LENGTH_SHORT).show();
             }
         });
+
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),UserComplain.class));
+            }
+        });
     }
 
 }
