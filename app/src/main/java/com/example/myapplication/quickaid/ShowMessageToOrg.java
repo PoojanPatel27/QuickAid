@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +24,8 @@ public class ShowMessageToOrg extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private RecyclerView msgRecyclerView;
     private MessageAdapter messageAdapter;
+    private FirebaseAuth orgAuth;
+    private FirebaseUser currentOrg;
 
 
 
@@ -35,9 +39,14 @@ public class ShowMessageToOrg extends AppCompatActivity {
         messageAdapter = new MessageAdapter(this,new ArrayList<>());
         msgRecyclerView.setAdapter(messageAdapter);
 
+        orgAuth= FirebaseAuth.getInstance();
+        currentOrg = orgAuth.getCurrentUser();
+
+        String uid = currentOrg.getUid();
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        String orgUid = "69XnzXRCnJVpUkfdtOXY3BKcKmJ2";
+        String orgUid = uid;
 
         DatabaseReference orgMsgRef = databaseReference.child("Organization").child(orgUid).child("messages");
         orgMsgRef.addListenerForSingleValueEvent(new ValueEventListener() {

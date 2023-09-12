@@ -9,12 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
     private Context context;
     private List<MessageModel> messageList;
+
 
     public MessageAdapter(Context context, List<MessageModel> messageList) {
         this.context = context;
