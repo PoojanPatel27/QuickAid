@@ -74,7 +74,7 @@ public class NgoList extends AppCompatActivity {
     private void filter(String newText) {
         ArrayList<OrgDetailsModel> filteredlist = new ArrayList<>();
         for (OrgDetailsModel item : listOrg){
-            if (item.getName().toLowerCase().contains(newText.toLowerCase())){
+            if (item.getName().toLowerCase().contains(newText.toLowerCase()) || item.getCategory().toLowerCase().contains(newText.toLowerCase())){
                 filteredlist.add(item);
             }
         }

@@ -23,6 +23,7 @@
                 android:id="@+id/orgImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:src="@drawable/ic_launcher_background"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="10dp"
@@ -36,7 +37,8 @@
                 android:layout_toRightOf="@id/orgImg"
                 android:textColor="@color/white"
                 android:layout_centerVertical="true"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:maxLines="2"
                 android:layout_marginStart="10dp"/>
 
             <ImageButton
@@ -45,7 +47,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_logout2"/>
+                android:background="@drawable/ic_logout"/>
 
         </RelativeLayout>
 
