@@ -2,8 +2,15 @@ package com.example.myapplication.quickaid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -11,9 +18,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,15 +32,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class RegisterOrg extends AppCompatActivity {
 
-    private EditText name,number,category,email,passsword,address,pincode;
+    private EditText name,number,category,email,passsword, addressIn,pincode;
+    private TextView autoLocation;
     private Button register;
 //    FirebaseAuth authUser;
     private ProgressBar progressBar;
     String uid;
     FirebaseAuth auth;
     FirebaseUser user;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private final static int REQUEST_CODE=100;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,8 +61,9 @@ public class RegisterOrg extends AppCompatActivity {
         category = findViewById(R.id.ngocategoryEtReg);
         email = findViewById(R.id.ngoemailEtReg);
         passsword = findViewById(R.id.ngopasswordEtReg);
-        address = findViewById(R.id.ngoaddressEtReg);
+        addressIn = findViewById(R.id.ngoaddressEtReg);
         pincode = findViewById(R.id.orgAreaPinReg);
+        autoLocation = findViewById(R.id.autoLocationTv);
         register = findViewById(R.id.orgRegBtn);
         progressBar = findViewById(R.id.orgProgbarReg);
 
@@ -59,7 +79,7 @@ public class RegisterOrg extends AppCompatActivity {
                 String textcategory = category.getText().toString();
                 String textemail = email.getText().toString();
                 String textpassword = passsword.getText().toString();
-                String textAddress = address.getText().toString();
+                String textAddress = addressIn.getText().toString();
                 String textPincode = pincode.getText().toString();
                 String textuid = fUser;
                 
@@ -101,8 +121,8 @@ public class RegisterOrg extends AppCompatActivity {
                 }
                 else if (TextUtils.isEmpty(textAddress)){
                     Toast.makeText(RegisterOrg.this, "Enter Address!!", Toast.LENGTH_SHORT).show();
-                    address.setError("address cannot be empty!!");
-                    address.requestFocus();
+                    addressIn.setError("address cannot be empty!!");
+                    addressIn.requestFocus();
                 } else  if (TextUtils.isEmpty(textPincode)){
                     Toast.makeText(RegisterOrg.this, "Enter Pincode", Toast.LENGTH_SHORT).show();
                     pincode.setError("Pincode required!!");
@@ -115,6 +135,67 @@ public class RegisterOrg extends AppCompatActivity {
             }
         });
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        autoLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLastLocation();
+            }
+        });
+
+
+
+
+    }
+
+    private void getLastLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
+
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location!=null){
+                                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                                try {
+                                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                                    if (addresses!=null){
+                                        Address address = addresses.get(0);
+                                        String completeAddress = address.getAddressLine(0);
+                                        Toast.makeText(RegisterOrg.this, "", Toast.LENGTH_SHORT).show();
+                                        RegisterOrg.this.addressIn.setText(completeAddress);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+
+        } else {
+            askPermission();
+        }
+    }
+
+    private void askPermission() {
+        ActivityCompat.requestPermissions(RegisterOrg.this,new String[]
+                {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode==REQUEST_CODE){
+            if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                getLastLocation();
+            }
+            else {
+                Toast.makeText(this, "Required Permission!!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void registerOrg(String textName, String textnumber, String textcategory, String textemail, String textpassword, String textAddress, String textPincode) {

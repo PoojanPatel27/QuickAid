@@ -14,7 +14,8 @@
     android:textSize="26sp"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="10dp"
-    android:textColor="@color/black"/>
+    android:textColor="@color/black"
+    android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_below="@id/RegisterTitleTv"
@@ -63,8 +64,17 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
-            android:hint="Location(click to get location automatically)"
+            android:hint="Location"
             android:paddingLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/autoLocationReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click here get location Automatically"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
