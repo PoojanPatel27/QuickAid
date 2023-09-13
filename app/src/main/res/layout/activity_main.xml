@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Safe Harbor"
+        android:text="Echo Sos"
         android:layout_below="@id/app_logo"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -120,6 +120,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/sosBtnMainActivity"
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:text="SOS"

@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DashboardUser extends AppCompatActivity {
 
-    CardView card1,card3,card5,card4;
+    CardView card1,card2,card3,card5,card4;
     ImageButton logout;
     TextView nametv;
     FirebaseAuth userAuth;
@@ -34,6 +34,7 @@ public class DashboardUser extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard_user);
 
         card1 = findViewById(R.id.card1);
+        card2 = findViewById(R.id.userCard2);
         card3 = findViewById(R.id.card3User);
         card5 = findViewById(R.id.card5);
         card4 = findViewById(R.id.card4);
@@ -66,6 +67,20 @@ public class DashboardUser extends AppCompatActivity {
             });
         }
 
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),UserComplain.class));
+            }
+        });
+
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),UserSOS.class));
+            }
+        });
+
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,12 +107,7 @@ public class DashboardUser extends AppCompatActivity {
         });
 
 
-        card1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),UserComplain.class));
-            }
-        });
+
     }
 
 }

@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button org,user;
+    Button org,user,sos;
     CardView carduser,organization;
     FirebaseAuth authUser;
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         org = findViewById(R.id.orgBtn);
         user = findViewById(R.id.userBtn);
+        sos = findViewById(R.id.sosBtnMainActivity);
         carduser = findViewById(R.id.cardUser);
         organization = findViewById(R.id.cradOrganization);
 
@@ -43,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),LoginUser.class);
                 startActivity(intent);
+            }
+        });
+
+        sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),UserSOS.class));
             }
         });
 

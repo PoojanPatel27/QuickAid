@@ -19,6 +19,20 @@
         android:theme="@style/Theme.QuickAid"
         tools:targetApi="31">
         <activity
+            android:name=".SOSAlertListOrg"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UserSOS"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".InboxUser"
             android:exported="false">
             <meta-data
