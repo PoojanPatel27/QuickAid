@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,8 +24,9 @@ public class DashboardOrg extends AppCompatActivity {
     ImageView logout;
     CardView card1;
     TextView orgName;
+    RelativeLayout userCompIndicator;
 
-    DatabaseReference reference;
+    DatabaseReference reference,reference2;
     FirebaseAuth userAuth;
     FirebaseUser fuser;
 
@@ -36,10 +38,14 @@ public class DashboardOrg extends AppCompatActivity {
         logout = findViewById(R.id.imgLogoutOrg);
         card1 = findViewById(R.id.card1org);
         orgName = findViewById(R.id.orgName);
+        userCompIndicator = findViewById(R.id.userCompIndicator);
 
         userAuth = FirebaseAuth.getInstance();
         fuser = userAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Organization");
+
+        reference2 = FirebaseDatabase.getInstance().getReference("Organization");
+
 
         if (fuser!=null){
             String uidOrg = fuser.getUid();
@@ -53,7 +59,6 @@ public class DashboardOrg extends AppCompatActivity {
                             orgName.setText(textName);
                         }
                     }
-
                 }
 
                 @Override
@@ -66,6 +71,7 @@ public class DashboardOrg extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userAuth.signOut();
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
             }

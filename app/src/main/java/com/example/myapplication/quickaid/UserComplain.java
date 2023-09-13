@@ -204,6 +204,11 @@ public class UserComplain extends AppCompatActivity {
                     messageData.put("problem",textProblem);
 
                     messageRef.setValue(messageData);
+                    name.setText("");
+                    contact.setText("");
+                    problem.setText("");
+                    locationEt.setText("");
+
 
                     Toast.makeText(UserComplain.this, "Message sent to "+textExperties, Toast.LENGTH_SHORT).show();
 

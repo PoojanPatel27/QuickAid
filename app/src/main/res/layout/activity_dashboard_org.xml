@@ -93,6 +93,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <RelativeLayout
+                        android:id="@+id/userCompIndicator"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/dot"
+                        android:visibility="gone"
+                        android:layout_alignParentEnd="true">
+
+                    </RelativeLayout>
+
                     <ImageView
                         android:id="@+id/imgUserComplain"
                         android:layout_width="50dp"
@@ -154,6 +164,29 @@
                 app:cardElevation="5dp"
                 app:cardCornerRadius="10dp"
                 android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imgViewChat"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_chat"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Communicate"
+                        android:layout_below="@id/imgViewChat"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                </RelativeLayout>
 
 
             </androidx.cardview.widget.CardView>

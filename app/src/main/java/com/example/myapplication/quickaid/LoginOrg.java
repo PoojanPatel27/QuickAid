@@ -91,4 +91,17 @@ public class LoginOrg extends AppCompatActivity {
         });
         
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = authUser.getCurrentUser();
+
+        if (currentUser!=null){
+            startActivity(new Intent(getApplicationContext(),DashboardOrg.class));
+            finish();
+        } else {
+
+        }
+    }
 }
