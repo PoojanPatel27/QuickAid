@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ public class LoginUser extends AppCompatActivity {
     TextView reg;
     Button login;
     private FirebaseAuth authUser;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -40,6 +42,9 @@ public class LoginUser extends AppCompatActivity {
         reg = findViewById(R.id.registerTv);
         login = findViewById(R.id.loginBtn);
         progressBar = findViewById(R.id.progBarLogin);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Login");
+        progressDialog.setMessage("Please Wait...");
 
 
         authUser = FirebaseAuth.getInstance();
@@ -60,7 +65,8 @@ public class LoginUser extends AppCompatActivity {
                     String textEmail = email.getText().toString();
                     String textPassword = password.getText().toString();
 
-                    progressBar.setVisibility(View.VISIBLE);
+//                    progressBar.setVisibility(View.VISIBLE);
+
                     if (TextUtils.isEmpty(textEmail)){
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginUser.this, "Please enter email!!", Toast.LENGTH_SHORT).show();
@@ -77,7 +83,8 @@ public class LoginUser extends AppCompatActivity {
                         password.setError("Password can't be empty");
                         password.requestFocus();
                     }else  {
-                        progressBar.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.VISIBLE);
+                        progressDialog.show();
                         loginUser(textEmail,textPassword);
                     }
             }
@@ -89,13 +96,15 @@ public class LoginUser extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    progressBar.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
+                    progressDialog.dismiss();
                     Toast.makeText(LoginUser.this, "Logged in!!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),DashboardUser.class);
                     startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(LoginUser.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             }
         });

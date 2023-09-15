@@ -3,6 +3,7 @@ package com.example.myapplication.quickaid;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ public class RegisterUser extends AppCompatActivity {
     private EditText name,number,email,password;
     Button regBtn;
     private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class RegisterUser extends AppCompatActivity {
         email = findViewById(R.id.emailEtReg);
         password = findViewById(R.id.passwordEtReg);
         progressBar = findViewById(R.id.progBar);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registering User...");
 
         regBtn = findViewById(R.id.regBtn);
 
@@ -79,7 +83,8 @@ public class RegisterUser extends AppCompatActivity {
                     password.requestFocus();
                 }
                 else {
-                    progressBar.setVisibility(View.VISIBLE);
+//                    progressBar.setVisibility(View.VISIBLE);
+                    progressDialog.show();
                     registerUser(textfullName, textNumber, textEmail, textPassword);
                 }
             }
@@ -119,7 +124,8 @@ public class RegisterUser extends AppCompatActivity {
 
                             } else {
                                 Toast.makeText(RegisterUser.this, "User registration failed!!", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
+//                                progressBar.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                             }
                         }
                     });

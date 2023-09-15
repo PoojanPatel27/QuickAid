@@ -160,6 +160,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/card3Org"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:cardElevation="5dp"

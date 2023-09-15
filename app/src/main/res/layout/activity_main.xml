@@ -13,14 +13,16 @@
         android:layout_height="150dp"
         android:src="@drawable/app_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/sloganTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unity in Crisis, Hope in Action."
+        android:text="Unity in Crisis, Hope in Action."
         android:layout_below="@id/app_nameTv"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true" />
 
@@ -32,7 +34,7 @@
         android:text="Echo Sos"
         android:layout_below="@id/app_logo"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <RelativeLayout
@@ -43,6 +45,15 @@
         android:layout_below="@id/sloganTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardUser"
@@ -75,17 +86,18 @@
 
             </RelativeLayout>
 
+
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
 
             android:id="@+id/cradOrganization"
-            android:layout_toRightOf="@id/cardUser"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:backgroundTint="#EEEEEE"
             app:cardCornerRadius="20dp"
-            android:layout_marginStart="60dp">
+            android:layout_marginStart="50dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -116,6 +128,7 @@
 
         </androidx.cardview.widget.CardView>
 
+        </LinearLayout>
 
     </RelativeLayout>
 

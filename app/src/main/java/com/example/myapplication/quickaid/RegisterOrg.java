@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -43,6 +44,8 @@ public class RegisterOrg extends AppCompatActivity {
     private Button register;
 //    FirebaseAuth authUser;
     private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
+
     String uid;
     FirebaseAuth auth;
     FirebaseUser user;
@@ -66,6 +69,8 @@ public class RegisterOrg extends AppCompatActivity {
         autoLocation = findViewById(R.id.autoLocationTv);
         register = findViewById(R.id.orgRegBtn);
         progressBar = findViewById(R.id.orgProgbarReg);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Registering...");
 
         auth = FirebaseAuth.getInstance();
         String fUser = auth.getUid();
@@ -129,7 +134,8 @@ public class RegisterOrg extends AppCompatActivity {
                     pincode.requestFocus();
                 }
                 else {
-                        progressBar.setVisibility(View.VISIBLE);
+//                        progressBar.setVisibility(View.VISIBLE);
+                        progressDialog.show();
                         registerOrg(textName,textnumber,textcategory,textemail,textpassword,textAddress,textPincode);
                 }
             }
@@ -163,7 +169,6 @@ public class RegisterOrg extends AppCompatActivity {
                                     if (addresses!=null){
                                         Address address = addresses.get(0);
                                         String completeAddress = address.getAddressLine(0);
-                                        Toast.makeText(RegisterOrg.this, "", Toast.LENGTH_SHORT).show();
                                         RegisterOrg.this.addressIn.setText(completeAddress);
                                     }
                                 } catch (IOException e) {
@@ -205,9 +210,9 @@ public class RegisterOrg extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-
+                    progressDialog.dismiss();
                     String orgUid = auth.getUid();
-                    progressBar.setVisibility(View.GONE);
+//                    progressBar.setVisibility(View.GONE);
                     FirebaseUser user = auth.getCurrentUser();
 
 
@@ -220,11 +225,13 @@ public class RegisterOrg extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if (task.isSuccessful()){
-                                progressBar.setVisibility(View.GONE);
+//                                progressBar.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                                 Toast.makeText(RegisterOrg.this, "Registered Successfully!!!", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                progressBar.setVisibility(View.GONE);
+//                                progressBar.setVisibility(View.GONE);
+                                progressDialog.dismiss();
                                 Toast.makeText(RegisterOrg.this, "Error occured!!", Toast.LENGTH_SHORT).show();
                             }
 

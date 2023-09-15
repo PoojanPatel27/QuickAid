@@ -3,6 +3,7 @@ package com.example.myapplication.quickaid;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +28,7 @@ public class LoginOrg extends AppCompatActivity {
     EditText email,password;
     Button login;
     FirebaseAuth authUser;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class LoginOrg extends AppCompatActivity {
         email = findViewById(R.id.emailEtloginorg);
         password = findViewById(R.id.passwordLoginorg);
         login = findViewById(R.id.loginBtn);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Logging in...");
         
         authUser = FirebaseAuth.getInstance();
 
@@ -68,6 +72,7 @@ public class LoginOrg extends AppCompatActivity {
                     email.setError("Enter valid email!!");
                     email.requestFocus();
                 } else {
+                    progressDialog.show();
                     loginOrg(textEmail,textPassword);
                 }
             }
@@ -81,10 +86,12 @@ public class LoginOrg extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    progressDialog.dismiss();
                     Toast.makeText(LoginOrg.this, "Logged in succefully!!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),DashboardOrg.class));
                     finish();
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(LoginOrg.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
                 }
             }

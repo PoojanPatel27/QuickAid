@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -40,6 +41,7 @@ public class DashboardUser extends AppCompatActivity {
         card4 = findViewById(R.id.card4);
         nametv = findViewById(R.id.userNameTv);
         logout = findViewById(R.id.imageButtonLogout);
+
         userAuth = FirebaseAuth.getInstance();
         fuser = userAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");

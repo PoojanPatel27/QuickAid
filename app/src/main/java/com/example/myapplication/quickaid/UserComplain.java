@@ -77,7 +77,6 @@ public class UserComplain extends AppCompatActivity {
 
 
 
-
         if (currentUser!=null){
             String uid = currentUser.getUid();
             reference2 = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
@@ -119,7 +118,7 @@ public class UserComplain extends AppCompatActivity {
 
                 List<String> spinnerCategory = new ArrayList<>();
                 for (OrgDetailsModel model : spinnerCategories){
-                    String spinnerCat = model.getName();
+                    String spinnerCat = model.getCategory();
                     if (spinnerCat!=null){
                         spinnerCategory.add(spinnerCat);
                     }
@@ -187,7 +186,7 @@ public class UserComplain extends AppCompatActivity {
     }
 
     private void sendMessageToOrganization(String textuid, String textExperties, String textName, String textContact, String textLocation, String textProblem) {
-        Query orgRef =  msgRef.child("Organization").orderByChild("name").equalTo(textExperties);
+        Query orgRef =  msgRef.child("Organization").orderByChild("category").equalTo(textExperties);
 
         orgRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

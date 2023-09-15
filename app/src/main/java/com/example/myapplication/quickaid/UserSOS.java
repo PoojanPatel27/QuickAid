@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -94,7 +95,7 @@ public class UserSOS extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+
                 String textName = name.getText().toString();
                 String textContact = contact.getText().toString();
                 String textLocation = locationEt.getText().toString();
@@ -113,13 +114,11 @@ public class UserSOS extends AppCompatActivity {
                 } else if (textAreacode.length()!=6){
                     areaCode.setError("Enter Valid Pincode");
                 }else {
+                    progressBar.setVisibility(View.VISIBLE);
                     uploadSosAlert(textName,textContact,textLocation,textAreacode);
                 }
             }
         });
-
-
-
     }
 
     private void uploadSosAlert(String textName, String textContact, String textLocation, String textAreacode) {
@@ -133,7 +132,6 @@ public class UserSOS extends AppCompatActivity {
         } else {
              uid = userAuth.getUid();
         }
-
 
 
         SosAlertModel sosModel = new SosAlertModel(textName,textContact,textLocation,textAreacode,uid);
@@ -150,6 +148,10 @@ public class UserSOS extends AppCompatActivity {
                     contact.setText("");
                     locationEt.setText("");
                     areaCode.setText("");
+//                    startActivity(new Intent(getApplicationContext(),CommunicationWindowUser.class));
+                    Intent intent = new Intent(getApplicationContext(),CommunicationWindowUser.class);
+                    intent.putExtra("uid",uid);
+                    startActivity(intent);
                 } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(UserSOS.this, "Error occured!!!", Toast.LENGTH_SHORT).show();

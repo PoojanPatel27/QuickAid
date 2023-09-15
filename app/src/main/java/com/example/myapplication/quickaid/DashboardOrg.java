@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class DashboardOrg extends AppCompatActivity {
 
     ImageView logout;
-    CardView card1,card2;
+    CardView card1,card2,card3;
     TextView orgName;
     RelativeLayout userCompIndicator;
 
@@ -38,6 +38,7 @@ public class DashboardOrg extends AppCompatActivity {
         logout = findViewById(R.id.imgLogoutOrg);
         card1 = findViewById(R.id.card1org);
         card2 = findViewById(R.id.card2org);
+        card3 = findViewById(R.id.card3Org);
         orgName = findViewById(R.id.orgName);
         userCompIndicator = findViewById(R.id.userCompIndicator);
 
@@ -91,6 +92,14 @@ public class DashboardOrg extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),SOSAlertListOrg.class));
             }
         });
+
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),CommunicationWindowOrg.class));
+            }
+        });
+
 
     }
 }
