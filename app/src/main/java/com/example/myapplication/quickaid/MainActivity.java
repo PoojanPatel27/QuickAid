@@ -11,12 +11,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     Button org,user,sos;
     CardView carduser,organization;
     FirebaseAuth authUser;
+    FirebaseUser currentUser;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         sos = findViewById(R.id.sosBtnMainActivity);
         carduser = findViewById(R.id.cardUser);
         organization = findViewById(R.id.cradOrganization);
+
+
 
 
         organization.setOnClickListener(new View.OnClickListener() {
@@ -54,5 +58,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
 }

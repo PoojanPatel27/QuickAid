@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,16 @@ public class SOSAlertListAdapter extends RecyclerView.Adapter<SOSAlertListAdapte
         holder.txtContact.setText("Contact: "+model.getContact());
         holder.txtLocation.setText("Location: "+model.getLocation());
         holder.txtPincode.setText("Pincode: "+model.getAreaCode());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,CommunicationWindowOrg.class);
+                intent.putExtra("name",model.getName());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

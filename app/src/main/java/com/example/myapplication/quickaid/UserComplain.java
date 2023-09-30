@@ -1,17 +1,21 @@
 package com.example.myapplication.quickaid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,16 +47,16 @@ import java.util.Map;
 
 public class UserComplain extends AppCompatActivity {
 
-    private EditText name,contact,problem, locationEt;
+    private EditText name, contact, problem, locationEt;
     private TextView autoLocation;
     private Spinner experties;
     private Button submit;
-    DatabaseReference databaseReference,reference2,msgRef;
-    FirebaseUser currentUser,currentuser2;
+    DatabaseReference databaseReference, reference2, msgRef;
+    FirebaseUser currentUser, currentuser2;
 
 
     FusedLocationProviderClient fusedLocationProviderClient;
-    private  final static int REQUEST_CODE=100;
+    private final static int REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class UserComplain extends AppCompatActivity {
         experties = findViewById(R.id.spinnerComp);
         autoLocation = findViewById(R.id.autoLocationReg);
         submit = findViewById(R.id.submitBtnComp);
-        fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Organization");
         msgRef = FirebaseDatabase.getInstance().getReference();
@@ -76,21 +80,20 @@ public class UserComplain extends AppCompatActivity {
 
 
 
-
-        if (currentUser!=null){
+        if (currentUser != null) {
             String uid = currentUser.getUid();
             reference2 = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
             reference2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
+                    if (snapshot.exists()) {
                         String nameEt = snapshot.child("name").getValue(String.class);
                         String contactEt = snapshot.child("number").getValue(String.class);
 
-                        if (nameEt!=null){
+                        if (nameEt != null) {
                             name.setText(nameEt);
                         }
-                        if (contactEt!=null){
+                        if (contactEt != null) {
                             contact.setText(contactEt);
                         }
                     }
@@ -108,22 +111,22 @@ public class UserComplain extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<OrgDetailsModel> spinnerCategories = new ArrayList<>();
 
-                for (DataSnapshot userSnapshot: snapshot.getChildren()){
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     OrgDetailsModel orgModel = userSnapshot.getValue(OrgDetailsModel.class);
 
-                    if (orgModel!=null){
+                    if (orgModel != null) {
                         spinnerCategories.add(orgModel);
                     }
                 }
 
                 List<String> spinnerCategory = new ArrayList<>();
-                for (OrgDetailsModel model : spinnerCategories){
+                for (OrgDetailsModel model : spinnerCategories) {
                     String spinnerCat = model.getCategory();
-                    if (spinnerCat!=null){
+                    if (spinnerCat != null) {
                         spinnerCategory.add(spinnerCat);
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,spinnerCategory);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, spinnerCategory);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 experties.setAdapter(adapter);
             }
@@ -133,7 +136,6 @@ public class UserComplain extends AppCompatActivity {
 
             }
         });
-
 
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -149,29 +151,29 @@ public class UserComplain extends AppCompatActivity {
                 String textuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-                if (TextUtils.isEmpty(textName)){
+                if (TextUtils.isEmpty(textName)) {
                     Toast.makeText(UserComplain.this, "Enter name!!", Toast.LENGTH_SHORT).show();
                     name.setError("Name cannot be empty");
                     name.requestFocus();
-                } else if (TextUtils.isEmpty(textContact)){
+                } else if (TextUtils.isEmpty(textContact)) {
                     Toast.makeText(UserComplain.this, "Enter Contact!!", Toast.LENGTH_SHORT).show();
                     contact.requestFocus();
                     contact.setError("Contact cannot be empty");
-                } else if (TextUtils.isEmpty(textProblem)){
+                } else if (TextUtils.isEmpty(textProblem)) {
                     Toast.makeText(UserComplain.this, "Enter Problem!!", Toast.LENGTH_SHORT).show();
                     problem.requestFocus();
                     problem.setError("Problem cannot be empty");
-                } else if (TextUtils.isEmpty(textLocation)){
+                } else if (TextUtils.isEmpty(textLocation)) {
                     Toast.makeText(UserComplain.this, "Enter location!!", Toast.LENGTH_SHORT).show();
                     locationEt.requestFocus();
                     locationEt.setError("location cannot be empty");
-                } else  if (TextUtils.isEmpty(textExperties)){
+                } else if (TextUtils.isEmpty(textExperties)) {
                     Toast.makeText(UserComplain.this, "Enter experties!!", Toast.LENGTH_SHORT).show();
                     experties.requestFocus();
                 } else {
 //                    registerUserComplain(textName,textContact,textProblem,textLocation,textExperties,uid);
 
-                    sendMessageToOrganization(textuid,textExperties,textName,textContact,textLocation,textProblem);
+                    sendMessageToOrganization(textuid, textExperties, textName, textContact, textLocation, textProblem);
                 }
 
             }
@@ -183,6 +185,25 @@ public class UserComplain extends AppCompatActivity {
                 getLastLocation();
             }
         });
+    }
+
+    private void getPhoneNumber() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(UserComplain.this,new String[]{
+                    Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS
+                },121);
+                return;
+            }
+            String phoneNumber = telephonyManager.getLine1Number();
+            contact.setText(phoneNumber);
+            Log.wtf("PhoneNumber","onCreate: "+phoneNumber);
+            Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendMessageToOrganization(String textuid, String textExperties, String textName, String textContact, String textLocation, String textProblem) {
@@ -255,6 +276,16 @@ public class UserComplain extends AppCompatActivity {
                 {Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==121 && resultCode == RESULT_OK){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode==REQUEST_CODE){
@@ -265,6 +296,7 @@ public class UserComplain extends AppCompatActivity {
                 Toast.makeText(this, "Required Permission!!", Toast.LENGTH_SHORT).show();
             }
         }
+        
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.contactTv.setText("Contact: "+message.getContact());
         holder.locationTv.setText("Location: "+message.getLocation());
         holder.messageTv.setText("Problem: "+message.getProblem());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,CommunicationWindowOrg.class);
+                intent.putExtra("name",message.getName());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

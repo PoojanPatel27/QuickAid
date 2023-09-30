@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -12,9 +13,13 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -42,6 +47,7 @@ public class UserSOS extends AppCompatActivity {
     private EditText name,contact, locationEt,areaCode;
     private Button submit;
     private ProgressBar progressBar;
+    private CheckBox chk1,chk2,chk3,chk4,chk5,chk6;
 
     DatabaseReference reference;
     private FirebaseUser currentUser;
@@ -60,6 +66,14 @@ public class UserSOS extends AppCompatActivity {
         areaCode = findViewById(R.id.sosAreaCodeEt);
         submit = findViewById(R.id.sossubmitBtn);
         progressBar = findViewById(R.id.progBarUserSos);
+
+        chk1 = findViewById(R.id.chk1);
+        chk2 = findViewById(R.id.chk2);
+        chk3 = findViewById(R.id.chk3);
+        chk4 = findViewById(R.id.chk4);
+        chk5 = findViewById(R.id.chk5);
+        chk6 = findViewById(R.id.chk6);
+
 
 
 
@@ -91,6 +105,14 @@ public class UserSOS extends AppCompatActivity {
             });
         }
 
+//        contact.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getPhoneNumber();
+//            }
+//        });
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,19 +123,27 @@ public class UserSOS extends AppCompatActivity {
                 String textLocation = locationEt.getText().toString();
                 String textAreacode = areaCode.getText().toString();
 
-                if (TextUtils.isEmpty(textName)){
-                    name.setError("Enter Name");
-                } else if (TextUtils.isEmpty(textContact)){
-                    contact.setError("Enter Contact No.");
-                } else if ((textContact.length()!=10)){
-                    contact.setError("Enter Valid No.");
-                } else if (TextUtils.isEmpty(textLocation)){
+
+                if (TextUtils.isEmpty(textName) || TextUtils.isEmpty(textContact)){
+                    name.setText("null");
+                }
+//                else if (TextUtils.isEmpty(textContact)){
+//                    contact.setText("null");
+//                }
+
+//                else if ((textContact.length()!=10)){
+//                    contact.setError("Enter Valid No.");
+//                }
+
+                else if (TextUtils.isEmpty(textLocation)){
                     locationEt.setError("Enter Location");
                 } else if (TextUtils.isEmpty(textAreacode)){
                     areaCode.setError("Enter Pincode");
                 } else if (textAreacode.length()!=6){
                     areaCode.setError("Enter Valid Pincode");
-                }else {
+                }
+
+                else {
                     progressBar.setVisibility(View.VISIBLE);
                     uploadSosAlert(textName,textContact,textLocation,textAreacode);
                 }
@@ -166,8 +196,8 @@ public class UserSOS extends AppCompatActivity {
         super.onStart();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         getLastLocation();
+        getPhoneNumber();
     }
 
     private void getLastLocation() {
@@ -215,5 +245,33 @@ public class UserSOS extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+    }
+
+    private void getPhoneNumber() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(UserSOS.this,new String[]{
+                        Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_PHONE_NUMBERS
+                },121);
+                return;
+            }
+            String phoneNumber = telephonyManager.getLine1Number();
+            contact.setText(phoneNumber);
+            Log.wtf("PhoneNumber","onCreate: "+phoneNumber);
+           // Toast.makeText(this, phoneNumber, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==121 && resultCode == RESULT_OK){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        }
     }
 }

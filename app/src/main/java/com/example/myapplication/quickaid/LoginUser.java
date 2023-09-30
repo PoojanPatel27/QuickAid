@@ -86,6 +86,8 @@ public class LoginUser extends AppCompatActivity {
 //                        progressBar.setVisibility(View.VISIBLE);
                         progressDialog.show();
                         loginUser(textEmail,textPassword);
+
+                        
                     }
             }
         });

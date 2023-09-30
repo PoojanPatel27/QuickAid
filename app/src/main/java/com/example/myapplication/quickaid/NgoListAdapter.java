@@ -1,6 +1,7 @@
 package com.example.myapplication.quickaid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,12 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.MyViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context,OrgDetailActivity.class);
+                 intent.putExtra("name",orgDetails.getName());
+                 intent.putExtra("category",orgDetails.getCategory());
+                 intent.putExtra("contact",orgDetails.getNumber());
+                 intent.putExtra("address",orgDetails.getAddress());
+                 context.startActivity(intent);
             }
         });
 

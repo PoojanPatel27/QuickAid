@@ -42,9 +42,18 @@
 
     </RelativeLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/chatRecViewOrg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionBarRel"
+        android:layout_above="@id/msgEtRlOrg"/>
+
 
 
     <RelativeLayout
+        android:id="@+id/msgEtRlOrg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
